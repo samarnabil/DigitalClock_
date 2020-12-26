@@ -101,6 +101,8 @@ void PB_Update(void)
             if(pb_info[current_button].samples[1] == PB_PRESSED_VOLTAGE)
             {
                 pb_info[current_button].state = PB_PRESSED;
+            }else{
+                pb_info[current_button].state = PB_PRESSED;
             }
             break;
         case PB_PRESSED:

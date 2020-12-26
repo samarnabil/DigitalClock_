@@ -57,15 +57,17 @@ void TMR0_Update(void) __interrupt 0 // @ 5 ms
     if (counter == 20)
     {
         // From the timing analysis table
+        DISP_Update();//@ 20 ms
         PB_Update(); // @ 20 ms
 
-        if(counter_2==1000) // every second to test only , in the final code will be 1000*60 as in every min
-        {
-            TIM_Update(); // @ 1000 ms
+        /*if(counter_2==1000) // every second to test only , in the final code will be 1000*60 as in every min
+        {*/
+        /*l if de msh htnf3 l2n period l TIM_Update() = 20 ms fe kant mbwza khales hetet l modes
+        fa lazem nflr f tre2a n3ed beha seconds mn gher manl3ab f l OS bt3na w ela kol haga htdrab */
+            TIM_Update(); // @ 20 ms
             counter_2=0;
-        }
+        //}
 
-        DISP_Update();//@ 20 ms
         counter = 0;
     }
 

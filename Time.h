@@ -19,8 +19,8 @@ typedef struct
 
 void TIM_Init(unsigned int Counter);
 void TIM_Update(void);
-//tTIM_Time TIM_GetTime();            //not sure fe parameters gowa wla la
-//tTIM_Mode TIM_GetMode();            //not sure fe parameters gowa wla la
+//tTIM_Time TIM_GetTime();
+tTIM_Mode TIM_GetMode();
 
 unsigned int TIM_GetMin(void);
 unsigned int TIM_GetHour(void);
