@@ -3,16 +3,15 @@
 #include "Switch.h"
 
 /* tTIM_Time Init_Time;  bt3ml error lma a7awl a access Time[1] (cannot assign values to aggregates ) fa ha use int insted */
-
-
-static unsigned int sec = 0;
 //static unsigned int hours = 0;
 //static unsigned int mins = 0;
+
+static unsigned int sec = 0;
 static tTIM_Mode current_Mode = NORMAL;
 static unsigned int SET_Counter=0;
 static tTIM_Time time = {0,0};
 
-void TIM_Init(unsigned int Counter)
+void TIM_Init(unsigned int Counter)   //nakhod hr,min,sec zy ma l bashmohandes 2al?
 {
 
     time.hours = Counter/100;
@@ -124,7 +123,7 @@ void TIM_Update(void)
     }
 }
 
-
+// azon l ahsan n-return l struct?
 unsigned int TIM_GetMin(void)
 {
     return time.minutes;
