@@ -5,23 +5,26 @@
 /* tTIM_Time Init_Time;  bt3ml error lma a7awl a access Time[1] (cannot assign values to aggregates ) fa ha use int insted */
 
 
-static unsigned int hours = 0;
-static unsigned int mins = 0;
+static unsigned int sec = 0;
+//static unsigned int hours = 0;
+//static unsigned int mins = 0;
 static tTIM_Mode current_Mode = NORMAL;
 static unsigned int SET_Counter=0;
+static tTIM_Time time = {0,0};
 
 void TIM_Init(unsigned int Counter)
 {
-    //Init_Time.hours = Counter/100;
-    //Init_Time.minutes = Counter%100;
-    hours = Counter/100;
-    mins  = Counter%100;
+
+    time.hours = Counter/100;
+    time.minutes = Counter%100;
+   // hours = Counter/100;
+    //mins  = Counter%100;
 
 }
 
 void TIM_Update(void)
 {
-    //get Set button pressed Counts
+   //get Set button pressed Counts
     if(PB_GetState(PB_SET) == PB_PRE_PRESSED)
     {
         SET_Counter++;
@@ -36,19 +39,29 @@ void TIM_Update(void)
     switch (current_Mode)
     {
     case NORMAL:
-        if(TIM_GetMin()<59)
+        if(sec < 1850)
         {
-            mins = TIM_GetMin()+1;
-        }
-        else if(TIM_GetHour()<23)
-        {
-            mins  = 0;
-            hours = TIM_GetHour()+1;
+            sec++;
         }
         else
         {
-            mins  = 0;
-            hours = 0;
+            sec = 0;
+            if (time.minutes < 59)
+            {
+                 time.minutes++;
+            }
+            else
+            {
+                 time.minutes = 00;
+                 if (time.hours < 23)
+                 {
+                     time.hours++;
+                 }
+                 else
+                 {
+                     time.hours = 00;
+                 }
+            }
         }
         break;
 
@@ -58,11 +71,11 @@ void TIM_Update(void)
         {
             if(TIM_GetHour() < 23)
             {
-                hours += 1;
+                time.hours += 1;
             }
             else
             {
-                hours = 00;
+                time.hours = 00;
             }
         }
 
@@ -70,11 +83,11 @@ void TIM_Update(void)
         {
             if(TIM_GetHour() > 0)
             {
-                    hours -= 1;
+                time.hours -= 1;
             }
             else
             {
-                hours = 23;
+                time.hours = 23;
             }
         }
         break;
@@ -84,11 +97,11 @@ void TIM_Update(void)
         {
             if(TIM_GetMin() < 59)
             {
-                mins = TIM_GetMin()+1;
+                time.minutes+=1;
             }
             else
             {
-                mins = 0;
+                time.minutes = 0;
             }
         }
 
@@ -96,11 +109,11 @@ void TIM_Update(void)
         {
             if(TIM_GetMin() > 0)
             {
-                mins = TIM_GetMin()-1;
+                time.minutes-=1;
             }
             else
             {
-                mins = 59;
+                time.minutes = 59;
             }
         }
         break;
@@ -114,12 +127,12 @@ void TIM_Update(void)
 
 unsigned int TIM_GetMin(void)
 {
-    return mins;
+    return time.minutes;
 }
 
 unsigned int TIM_GetHour(void)
 {
-    return hours;
+    return time.hours;
 }
 
 /* nfs el error lma b7awl a3ml x = TIM_GetTime() (cannot assign values to aggregates )
