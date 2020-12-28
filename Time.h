@@ -12,17 +12,19 @@ typedef enum
 
 typedef struct
 {
-   unsigned int hours;
-   unsigned int minutes;
+   unsigned char hours;
+   unsigned char minutes;
+   unsigned char seconds;
+
 }tTIM_Time;
 
 
-void TIM_Init(unsigned int Counter);
+void TIM_Init(unsigned char Initial_Hours,unsigned char Initial_Minutes,unsigned char Initial_Seconds);
 void TIM_Update(void);
 //tTIM_Time TIM_GetTime();
 tTIM_Mode TIM_GetMode();
 
-unsigned int TIM_GetMin(void);
-unsigned int TIM_GetHour(void);
+unsigned char TIM_GetMin(void);
+unsigned char TIM_GetHour(void);
 
 #endif // __TIM_H__

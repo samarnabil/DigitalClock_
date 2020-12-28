@@ -6,16 +6,19 @@
 //static unsigned int hours = 0;
 //static unsigned int mins = 0;
 
-static unsigned int sec = 0;
+static unsigned char CountSec = 0;
 static tTIM_Mode current_Mode = NORMAL;
 static unsigned int SET_Counter=0;
-static tTIM_Time time = {0,0};
+static tTIM_Time time;
 
-void TIM_Init(unsigned int Counter)   //nakhod hr,min,sec zy ma l bashmohandes 2al?
+void TIM_Init(unsigned char Initial_Hours,unsigned char Initial_Minutes,unsigned char Initial_Seconds)   //nakhod hr,min,sec zy ma l bashmohandes 2al?
 {
+    time.hours = Initial_Hours;
+    time.minutes = Initial_Minutes;
+    time.seconds = Initial_Seconds;
 
-    time.hours = Counter/100;
-    time.minutes = Counter%100;
+    //time.hours = Counter/100;
+    //time.minutes = Counter%100;
    // hours = Counter/100;
     //mins  = Counter%100;
 
@@ -38,29 +41,38 @@ void TIM_Update(void)
     switch (current_Mode)
     {
     case NORMAL:
-        if(sec < 1850)
+        if(CountSec < 31)
         {
-            sec++;
+            CountSec++;
         }
         else
         {
-            sec = 0;
-            if (time.minutes < 59)
+            CountSec = 0;
+            if (time.seconds<59)
             {
-                 time.minutes++;
+                time.seconds++;
             }
             else
             {
-                 time.minutes = 00;
-                 if (time.hours < 23)
-                 {
-                     time.hours++;
-                 }
-                 else
-                 {
-                     time.hours = 00;
-                 }
+                time.seconds=00;
+                if (time.minutes < 59)
+                {
+                    time.minutes++;
+                }
+                else
+                {
+                    time.minutes = 00;
+                    if (time.hours < 23)
+                        {
+                            time.hours++;
+                        }
+                    else
+                    {
+                        time.hours = 00;
+                    }
+                }
             }
+
         }
         break;
 
@@ -124,12 +136,12 @@ void TIM_Update(void)
 }
 
 // azon l ahsan n-return l struct?
-unsigned int TIM_GetMin(void)
+unsigned char TIM_GetMin(void)
 {
     return time.minutes;
 }
 
-unsigned int TIM_GetHour(void)
+unsigned char TIM_GetHour(void)
 {
     return time.hours;
 }

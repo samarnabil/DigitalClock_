@@ -4,8 +4,8 @@
 #include "Switch.h"
 
 // tTIM_Time Time;
-static unsigned int hours;
-static unsigned int mins;
+static unsigned char hours;
+static unsigned char mins;
 void DISP_Init()
 {
     SSD_Init(SSD_HOURS_TENS, SSD_OFF, SSD_0);
