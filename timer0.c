@@ -48,7 +48,7 @@ void TMR0_Start(void)
 void TMR0_Update(void) __interrupt 0 // @ 5 ms
 {
     static unsigned char counter = 0;
-    static unsigned int counter_2 = 0;
+    //static unsigned int counter_2 = 0;
 
     counter = counter + TMR0_TICK_MS;
     //counter_2 = counter_2 + TMR0_TICK_MS;
