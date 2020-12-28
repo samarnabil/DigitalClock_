@@ -15,7 +15,7 @@ static tTIM_Mode current_Mode = NORMAL;
 static unsigned int SET_Counter=0;
 static tTIM_Time time;
 
-void TIM_Init(unsigned char Initial_Hours,unsigned char Initial_Minutes,unsigned char Initial_Seconds)   //nakhod hr,min,sec zy ma l bashmohandes 2al?
+void TIM_Init(unsigned char Initial_Hours,unsigned char Initial_Minutes,unsigned char Initial_Seconds)
 {
     time.hours = Initial_Hours;
     time.minutes = Initial_Minutes;

@@ -29,29 +29,29 @@ void DISP_Update()
     SSD_SetSymbol(SSD_MINUTES_UNITS, Time.minutes%10);
     */
     tTIM_Mode current_Mode = TIM_GetMode();
-   hours = TIM_GetTime(RETURN_HOURS);
+    hours = TIM_GetTime(RETURN_HOURS);
     mins  = TIM_GetTime(RETURN_MINUTES);
 
     //Display behavior for each mode
     switch(current_Mode)
     {
     case NORMAL:
-        //seconds blinking dot
         SSD_SetSymbol(SSD_HOURS_TENS, hours/10);
         SSD_SetSymbol(SSD_HOURS_UNITS, hours%10);
         SSD_SetSymbol(SSD_MINUTES_TENS, mins/10);
         SSD_SetSymbol(SSD_MINUTES_UNITS, mins%10);
+        //seconds blinking dot
         break;
     case SET_HOURS:
-        //SSD_HOURS_TENS & SSD_HOURS_UNITS blinking
         SSD_SetSymbol(SSD_HOURS_TENS, hours/10);
         SSD_SetSymbol(SSD_HOURS_UNITS, hours%10);
+        //SSD_HOURS_TENS & SSD_HOURS_UNITS blinking
         break;
     case SET_MINUTES:
-        //SSD_MINUTES_TENS & SSD_MINUTES_UNITS blinking
-        //lw fe hours already set yfdalo zahreen w sabteen
         SSD_SetSymbol(SSD_MINUTES_TENS, mins/10);
         SSD_SetSymbol(SSD_MINUTES_UNITS, mins%10);
+        //SSD_MINUTES_TENS & SSD_MINUTES_UNITS blinking
+        //lw fe hours already set yfdalo zahreen w sabteen
 
         break;
     default:

@@ -16,7 +16,7 @@ void main(void)
     PB_Init(PB_SET, PB_RELEASED);
 
     TIM_Init(00,00,00);
-    DISP_Init();  //mn gowaha han3ml SSD_init()
+    DISP_Init();
 
     TMR0_Init();
     TMR0_Start();
