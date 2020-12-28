@@ -3,6 +3,10 @@
 #include "ssd.h"
 #include "Switch.h"
 
+#define RETURN_HOURS (0)
+#define RETURN_MINUTES (1)
+#define RETURN_SECONDS (2)
+
 // tTIM_Time Time;
 static unsigned char hours;
 static unsigned char mins;
@@ -25,8 +29,8 @@ void DISP_Update()
     SSD_SetSymbol(SSD_MINUTES_UNITS, Time.minutes%10);
     */
     tTIM_Mode current_Mode = TIM_GetMode();
-    hours = TIM_GetHour();
-    mins  = TIM_GetMin();
+   hours = TIM_GetTime(RETURN_HOURS);
+    mins  = TIM_GetTime(RETURN_MINUTES);
 
     //Display behavior for each mode
     switch(current_Mode)

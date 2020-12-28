@@ -2,6 +2,10 @@
 #include "ssd.h"
 #include "Switch.h"
 
+#define RETURN_HOURS (0)
+#define RETURN_MINUTES (1)
+#define RETURN_SECONDS (2)
+
 /* tTIM_Time Init_Time;  bt3ml error lma a7awl a access Time[1] (cannot assign values to aggregates ) fa ha use int insted */
 //static unsigned int hours = 0;
 //static unsigned int mins = 0;
@@ -80,7 +84,7 @@ void TIM_Update(void)
 
         if (PB_GetState(PB_PLUS) == PB_PRE_PRESSED)
         {
-            if(TIM_GetHour() < 23)
+            if( TIM_GetTime(RETURN_HOURS) < 23)
             {
                 time.hours += 1;
             }
@@ -92,7 +96,7 @@ void TIM_Update(void)
 
         if (PB_GetState(PB_MINUS) == PB_PRE_PRESSED)
         {
-            if(TIM_GetHour() > 0)
+            if( TIM_GetTime(RETURN_HOURS) > 0)
             {
                 time.hours -= 1;
             }
@@ -106,7 +110,7 @@ void TIM_Update(void)
     case SET_MINUTES:
         if (PB_GetState(PB_PLUS) == PB_PRE_PRESSED)
         {
-            if(TIM_GetMin() < 59)
+            if( TIM_GetTime(RETURN_MINUTES) < 59)
             {
                 time.minutes+=1;
             }
@@ -118,7 +122,7 @@ void TIM_Update(void)
 
         if (PB_GetState(PB_MINUS) == PB_PRE_PRESSED)
         {
-            if(TIM_GetMin() > 0)
+            if( TIM_GetTime(RETURN_MINUTES) > 0)
             {
                 time.minutes-=1;
             }
@@ -136,7 +140,7 @@ void TIM_Update(void)
 }
 
 // azon l ahsan n-return l struct?
-unsigned char TIM_GetMin(void)
+/*unsigned char TIM_GetMin(void)
 {
     return time.minutes;
 }
@@ -144,7 +148,7 @@ unsigned char TIM_GetMin(void)
 unsigned char TIM_GetHour(void)
 {
     return time.hours;
-}
+}*/
 
 /* nfs el error lma b7awl a3ml x = TIM_GetTime() (cannot assign values to aggregates )
 tTIM_Time TIM_GetTime()
@@ -152,6 +156,22 @@ tTIM_Time TIM_GetTime()
     return Init_Time;
 }
 */
+
+unsigned char TIM_GetTime(unsigned char type)
+{
+    if (type == RETURN_HOURS)
+    {
+        return time.hours;
+    }
+    else if (type == RETURN_MINUTES)
+    {
+        return time.minutes;
+    }
+    else if (type == RETURN_SECONDS)
+    {
+        return time.seconds;
+    }
+}
 
 tTIM_Mode TIM_GetMode()
 {
