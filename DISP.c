@@ -91,6 +91,6 @@ void DISP_Update()
         BLINKING_INTERVAL = 0;
     }
 
-    SSD_Update();
+
 
 }
