@@ -48,24 +48,21 @@ void TMR0_Start(void)
 void TMR0_Update(void) __interrupt 0 // @ 5 ms
 {
     static unsigned char counter = 0;
-    //static unsigned int counter_2 = 0;
 
     counter = counter + TMR0_TICK_MS;
-    //counter_2 = counter_2 + TMR0_TICK_MS;
 
     /* Tasks */
     if (counter == 20)
     {
         // From the timing analysis table
-        DISP_Update();//@ 20 ms
+
         PB_Update(); // @ 20 ms
         TIM_Update(); // @ 20 ms
-        //counter_2=0;
 
         counter = 0;
     }
 
-    SSD_Update();// @ 5 ms
+    DISP_Update();//@ 5 ms
 
     TMR0_CLEAR_FLAG();
     TMR0_SET_TIME_MS(TMR0_TICK_MS);

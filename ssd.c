@@ -21,6 +21,35 @@ static unsigned char ssd_data[] =
     0b00000000
 };
 
+static unsigned char ssd_data_DP[] =
+{
+    0b10111111, // 0
+    0b10000110, // 1
+    0b11011011, // 2
+    0b11001111, // 3
+    0b11100110, // 4
+    0b11101101, // 5
+    0b11111101, // 6
+    0b10000111, // 7
+    0b11111111, // 8
+    0b11101111, // 9
+    0b10000000  // 10
+};
+
+static unsigned char ssd_data_Blink[] =
+{
+    0b00000000, // 0
+    0b00000000, // 0
+    0b00000000, // 0
+    0b00000000, // 0
+    0b00000000, // 0
+    0b00000000, // 0
+    0b00000000, // 0
+    0b00000000, // 0
+    0b00000000, // 0
+    0b00000000, // 0
+};
+
 
 void SSD_Init(tSSD ssd, tSSD_State initial_state, tSSD_Symbol initial_symbol)
 {
@@ -52,7 +81,7 @@ void SSD_Init(tSSD ssd, tSSD_State initial_state, tSSD_Symbol initial_symbol)
     SSD_SetState(ssd, initial_state);
 
     /* Set initial symbol */
-    SSD_SetSymbol(ssd, initial_symbol);
+    SSD_SetSymbol(ssd, initial_symbol,1);
 
 }
 
@@ -67,7 +96,7 @@ void SSD_Update(void)
     SSD_SetState(SSD_MINUTES_UNITS, SSD_OFF);
 
     /* Set current ssd output */
-    GPIO_SetPortState(PORT_D, ssd_data[ssd_symbols[current_ssd]]);
+    GPIO_SetPortState(PORT_D, ssd_symbols[current_ssd]);
     /* Turn on current ssd */
     SSD_SetState(current_ssd, SSD_ON);
 
@@ -83,9 +112,23 @@ void SSD_Update(void)
 
 }
 
-void SSD_SetSymbol(tSSD ssd, tSSD_Symbol symbol)
+void SSD_SetSymbol(tSSD ssd, tSSD_Symbol symbol,unsigned char condition)
 {
-    ssd_symbols[ssd] = symbol;
+    switch(condition)
+    {
+    case 0:
+        ssd_symbols[ssd] = ssd_data_Blink[symbol];
+        break;
+    case 1:
+        ssd_symbols[ssd] = ssd_data[symbol];
+        break;
+    case 2:
+        ssd_symbols[ssd] = ssd_data_DP[symbol];
+        break;
+    default:
+        break;
+    }
+
 }
 
 void SSD_SetState(tSSD ssd, tSSD_State state)

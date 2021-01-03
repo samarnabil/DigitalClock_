@@ -48,6 +48,7 @@ void TIM_Update(void)
         if(CountSec < 31)
         {
             CountSec++;
+
         }
         else
         {

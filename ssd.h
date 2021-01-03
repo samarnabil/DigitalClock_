@@ -6,7 +6,8 @@ typedef enum
     SSD_HOURS_TENS,
     SSD_HOURS_UNITS,
     SSD_MINUTES_TENS,
-    SSD_MINUTES_UNITS
+    SSD_MINUTES_UNITS,
+    BLINKING_DOT,
 
 }tSSD;
 
@@ -33,7 +34,7 @@ typedef enum
 
 void SSD_Init(tSSD ssd, tSSD_State initial_state, tSSD_Symbol initial_symbol);
 void SSD_Update(void);
-void SSD_SetSymbol(tSSD ssd, tSSD_Symbol symbol);
+void SSD_SetSymbol(tSSD ssd, tSSD_Symbol symbol, unsigned char condition);
 void SSD_SetState(tSSD ssd, tSSD_State state);
 tSSD_Symbol SSD_GetSymbol(tSSD ssd);
 tSSD_State SSD_GetState(tSSD ssd);

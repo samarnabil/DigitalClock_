@@ -10,6 +10,7 @@
 // tTIM_Time Time;
 static unsigned char hours;
 static unsigned char mins;
+static unsigned char BLINKING_INTERVAL = 0;
 void DISP_Init()
 {
     SSD_Init(SSD_HOURS_TENS, SSD_OFF, SSD_0);
@@ -21,43 +22,75 @@ void DISP_Init()
 
 void DISP_Update()
 {
-    /*
-    Time = TIM_GetTime();
-    SSD_SetSymbol(SSD_HOURS_TENS, Time.hours/10);
-    SSD_SetSymbol(SSD_HOURS_UNITS, Time.hours%10);
-    SSD_SetSymbol(SSD_MINUTES_TENS, Time.minutes/10);
-    SSD_SetSymbol(SSD_MINUTES_UNITS, Time.minutes%10);
-    */
+
     tTIM_Mode current_Mode = TIM_GetMode();
     hours = TIM_GetTime(RETURN_HOURS);
     mins  = TIM_GetTime(RETURN_MINUTES);
 
     //Display behavior for each mode
-    switch(current_Mode)
+     switch(current_Mode)
     {
     case NORMAL:
-        SSD_SetSymbol(SSD_HOURS_TENS, hours/10);
-        SSD_SetSymbol(SSD_HOURS_UNITS, hours%10);
-        SSD_SetSymbol(SSD_MINUTES_TENS, mins/10);
-        SSD_SetSymbol(SSD_MINUTES_UNITS, mins%10);
-        //seconds blinking dot
+        if (BLINKING_INTERVAL > 50)
+        {
+            SSD_SetSymbol(SSD_HOURS_TENS, hours/10,1);
+            SSD_SetSymbol(SSD_HOURS_UNITS, hours%10,1);
+            SSD_SetSymbol(SSD_MINUTES_TENS, mins/10,1);
+            SSD_SetSymbol(SSD_MINUTES_UNITS, mins%10,1);
+        }
+        else
+        {
+            SSD_SetSymbol(SSD_HOURS_TENS, hours/10,1);
+            SSD_SetSymbol(SSD_HOURS_UNITS, hours%10,1);
+            SSD_SetSymbol(SSD_MINUTES_TENS, mins/10,1);
+            SSD_SetSymbol(SSD_MINUTES_UNITS, mins%10,2);
+        }
+
         break;
     case SET_HOURS:
-        SSD_SetSymbol(SSD_HOURS_TENS, hours/10);
-        SSD_SetSymbol(SSD_HOURS_UNITS, hours%10);
-        //SSD_HOURS_TENS & SSD_HOURS_UNITS blinking
+        if (BLINKING_INTERVAL > 60)
+        {
+            SSD_SetSymbol(SSD_HOURS_TENS, hours/10,1);
+            SSD_SetSymbol(SSD_HOURS_UNITS, hours%10,1);
+            SSD_SetSymbol(SSD_MINUTES_TENS, mins/10,1);
+            SSD_SetSymbol(SSD_MINUTES_UNITS, mins%10,1);
+        }
+        else
+        {
+            SSD_SetSymbol(SSD_HOURS_TENS, hours/10,0);
+            SSD_SetSymbol(SSD_HOURS_UNITS, hours%10,0);
+            SSD_SetSymbol(SSD_MINUTES_TENS, mins/10,1);
+            SSD_SetSymbol(SSD_MINUTES_UNITS, mins%10,1);
+        }
         break;
     case SET_MINUTES:
-        SSD_SetSymbol(SSD_MINUTES_TENS, mins/10);
-        SSD_SetSymbol(SSD_MINUTES_UNITS, mins%10);
-        //SSD_MINUTES_TENS & SSD_MINUTES_UNITS blinking
-        //lw fe hours already set yfdalo zahreen w sabteen
+        if ( BLINKING_INTERVAL > 60)
+        {
+            SSD_SetSymbol(SSD_HOURS_TENS, hours/10,1);
+            SSD_SetSymbol(SSD_HOURS_UNITS, hours%10,1);
+            SSD_SetSymbol(SSD_MINUTES_TENS, mins/10,1);
+            SSD_SetSymbol(SSD_MINUTES_UNITS, mins%10,1);
+        }
+        else
+        {
+            SSD_SetSymbol(SSD_HOURS_TENS, hours/10,1);
+            SSD_SetSymbol(SSD_HOURS_UNITS, hours%10,1);
+            SSD_SetSymbol(SSD_MINUTES_TENS, mins/10,0);
+            SSD_SetSymbol(SSD_MINUTES_UNITS, mins%10,0);
+        }
+        break;
 
         break;
     default:
         break;
-
-
     }
+
+    BLINKING_INTERVAL++;
+    if (BLINKING_INTERVAL >= 200)
+    {
+        BLINKING_INTERVAL = 0;
+    }
+
+    SSD_Update();
 
 }
