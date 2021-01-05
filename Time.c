@@ -1,30 +1,27 @@
 #include "Time.h"
 #include "ssd.h"
 #include "Switch.h"
+#include "timer0.h"
+
+//#define Clock_Frequency (40)   //40 MHz
+//#define desired_delay (60)     // 60 sec = 1 min
 
 #define RETURN_HOURS (0)
 #define RETURN_MINUTES (1)
 #define RETURN_SECONDS (2)
 
-/* tTIM_Time Init_Time;  bt3ml error lma a7awl a access Time[1] (cannot assign values to aggregates ) fa ha use int insted */
-//static unsigned int hours = 0;
-//static unsigned int mins = 0;
 
 static unsigned char CountSec = 0;
 static tTIM_Mode current_Mode = NORMAL;
 static unsigned int SET_Counter=0;
 static tTIM_Time time;
+//unsigned int Delay = 0;
 
 void TIM_Init(unsigned char Initial_Hours,unsigned char Initial_Minutes,unsigned char Initial_Seconds)
 {
     time.hours = Initial_Hours;
     time.minutes = Initial_Minutes;
     time.seconds = Initial_Seconds;
-
-    //time.hours = Counter/100;
-    //time.minutes = Counter%100;
-   // hours = Counter/100;
-    //mins  = Counter%100;
 
 }
 
@@ -40,15 +37,17 @@ void TIM_Update(void)
 
     current_Mode = TIM_GetMode();
 
+    //Calculate desired delay
+    //Delay = delay_sec(Clock_Frequency, desired_delay);
+
 
     // Behavior according to the Mode
     switch (current_Mode)
     {
     case NORMAL:
-        if(CountSec < 31)
+        if(CountSec < 72)
         {
             CountSec++;
-
         }
         else
         {
@@ -140,23 +139,6 @@ void TIM_Update(void)
     }
 }
 
-// azon l ahsan n-return l struct?
-/*unsigned char TIM_GetMin(void)
-{
-    return time.minutes;
-}
-
-unsigned char TIM_GetHour(void)
-{
-    return time.hours;
-}*/
-
-/* nfs el error lma b7awl a3ml x = TIM_GetTime() (cannot assign values to aggregates )
-tTIM_Time TIM_GetTime()
-{
-    return Init_Time;
-}
-*/
 
 unsigned char TIM_GetTime(unsigned char type)
 {

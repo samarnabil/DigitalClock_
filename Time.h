@@ -24,7 +24,5 @@ void TIM_Update(void);
 unsigned char TIM_GetTime(unsigned char type);
 tTIM_Mode TIM_GetMode();
 
-//unsigned char TIM_GetMin(void);
-//unsigned char TIM_GetHour(void);
 
 #endif // __TIM_H__

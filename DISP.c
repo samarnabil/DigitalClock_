@@ -7,7 +7,7 @@
 #define RETURN_MINUTES (1)
 #define RETURN_SECONDS (2)
 
-// tTIM_Time Time;
+
 static unsigned char hours;
 static unsigned char mins;
 static unsigned char BLINKING_INTERVAL = 0;
@@ -41,9 +41,9 @@ void DISP_Update()
         else
         {
             SSD_SetSymbol(SSD_HOURS_TENS, hours/10,1);
-            SSD_SetSymbol(SSD_HOURS_UNITS, hours%10,1);
+            SSD_SetSymbol(SSD_HOURS_UNITS, hours%10,2);
             SSD_SetSymbol(SSD_MINUTES_TENS, mins/10,1);
-            SSD_SetSymbol(SSD_MINUTES_UNITS, mins%10,2);
+            SSD_SetSymbol(SSD_MINUTES_UNITS, mins%10,1);
         }
 
         break;

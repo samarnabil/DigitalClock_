@@ -68,7 +68,24 @@ void TMR0_Update(void) __interrupt 0 // @ 5 ms
     TMR0_CLEAR_FLAG();
     TMR0_SET_TIME_MS(TMR0_TICK_MS);
 
+
     return;
 }
 
 
+/*unsigned int delay_sec(unsigned int F_clk, unsigned int desired_delay)
+{
+    //F_clk: board clock frequency
+    unsigned int prescaler = 256;   //It is based on PS0 – PS2 bits in OPTION_REG
+
+    unsigned count = F_clk * (1000000) / (4*256*256*1);
+    unsigned int F_out = F_clk / (4*prescaler*(256 - TMR0)* count);
+
+    unsigned int T_out = 1 / F_out;   // 1 sec
+
+
+    return T_out * desired_delay;
+
+
+}*/
+// from this link: https://embetronicx.com/tutorials/microcontrollers/pic16f877a/pic16f877a-timer-tutorial/
