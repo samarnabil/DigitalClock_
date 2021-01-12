@@ -7,7 +7,6 @@ typedef enum
     SSD_HOURS_UNITS,
     SSD_MINUTES_TENS,
     SSD_MINUTES_UNITS,
-    BLINKING_DOT,
 
 }tSSD;
 

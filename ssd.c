@@ -1,55 +1,25 @@
 #include "ssd.h"
 #include "gpio.h"
 #include "utilities.h"
-
+#include "Time.h"
 #define NUMBER_OF_SSD   (4)
 
-tSSD_Symbol ssd_symbols[NUMBER_OF_SSD] = {SSD_NULL};
 
+tSSD_Symbol ssd_symbols[NUMBER_OF_SSD] = {SSD_NULL};
 static unsigned char ssd_data[] =
 {
-    0b00111111,
-    0b00000110,
-    0b01011011,
-    0b01001111,
-    0b01100110,
-    0b01101101,
-    0b01111101,
-    0b00000111,
-    0b01111111,
-    0b01101111,
-    0b00000000
+    0b00111111, // 0
+    0b00000110, // 1
+    0b01011011, // 2
+    0b01001111, // 3
+    0b01100110, // 4
+    0b01101101, // 5
+    0b01111101, // 6
+    0b00000111, // 7
+    0b01111111, // 8
+    0b01101111, // 9
+    0b00000000  // 10
 };
-
-static unsigned char ssd_data_DP[] =
-{
-    0b10111111, // 0
-    0b10000110, // 1
-    0b11011011, // 2
-    0b11001111, // 3
-    0b11100110, // 4
-    0b11101101, // 5
-    0b11111101, // 6
-    0b10000111, // 7
-    0b11111111, // 8
-    0b11101111, // 9
-    0b10000000  // 10
-};
-
-static unsigned char ssd_data_Blink[] =
-{
-    0b00000000, // 0
-    0b00000000, // 0
-    0b00000000, // 0
-    0b00000000, // 0
-    0b00000000, // 0
-    0b00000000, // 0
-    0b00000000, // 0
-    0b00000000, // 0
-    0b00000000, // 0
-    0b00000000, // 0
-};
-
 
 void SSD_Init(tSSD ssd, tSSD_State initial_state, tSSD_Symbol initial_symbol)
 {
@@ -97,6 +67,7 @@ void SSD_Update(void)
 
     /* Set current ssd output */
     GPIO_SetPortState(PORT_D, ssd_symbols[current_ssd]);
+
     /* Turn on current ssd */
     SSD_SetState(current_ssd, SSD_ON);
 
@@ -108,8 +79,6 @@ void SSD_Update(void)
     {
         current_ssd++;
     }
-
-
 }
 
 void SSD_SetSymbol(tSSD ssd, tSSD_Symbol symbol,unsigned char condition)
@@ -117,13 +86,13 @@ void SSD_SetSymbol(tSSD ssd, tSSD_Symbol symbol,unsigned char condition)
     switch(condition)
     {
     case 0:
-        ssd_symbols[ssd] = ssd_data_Blink[symbol];
+        ssd_symbols[ssd] = ssd_data[10]; // SSD off
         break;
     case 1:
-        ssd_symbols[ssd] = ssd_data[symbol];
+        ssd_symbols[ssd] = ssd_data[symbol]; // original symbol
         break;
     case 2:
-        ssd_symbols[ssd] = ssd_data_DP[symbol];
+        ssd_symbols[ssd] = ssd_data[symbol] | 10000000; // original symbol with blinking dot
         break;
     default:
         break;
@@ -187,3 +156,4 @@ tSSD_State SSD_GetState(tSSD ssd)
 
     return ret;
 }
+
