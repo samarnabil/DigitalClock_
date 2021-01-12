@@ -3,19 +3,21 @@
 #include "Switch.h"
 #include "timer0.h"
 
-//#define Clock_Frequency (40)   //40 MHz
-//#define desired_delay (60)     // 60 sec = 1 min
 
-#define RETURN_HOURS (0)
+#define RETURN_HOURS   (0)
 #define RETURN_MINUTES (1)
 #define RETURN_SECONDS (2)
+
+#define Normal_Count      (0)
+#define Set_Hours_Count   (1)
+#define Set_Minutes_Count (2)
+#define Change_Mode_Count (3)
 
 
 static unsigned char CountSec = 0;
 static tTIM_Mode current_Mode = NORMAL;
 static unsigned int SET_Counter=0;
 static tTIM_Time time;
-//unsigned int Delay = 0;
 
 void TIM_Init(unsigned char Initial_Hours,unsigned char Initial_Minutes,unsigned char Initial_Seconds)
 {
@@ -36,9 +38,6 @@ void TIM_Update(void)
     //get current mode
 
     current_Mode = TIM_GetMode();
-
-    //Calculate desired delay
-    //Delay = delay_sec(Clock_Frequency, desired_delay);
 
 
     // Behavior according to the Mode
@@ -158,19 +157,29 @@ unsigned char TIM_GetTime(unsigned char type)
 
 tTIM_Mode TIM_GetMode()
 {
-   //Identifying the current mode
-   if(SET_Counter % 3 == 0)
+   //Identifying the current mode from the number of button presses
+   if(SET_Counter % Change_Mode_Count == Normal_Count)
    {
        current_Mode = NORMAL;
    }
-   else if(SET_Counter % 3 == 1)
+   else if(SET_Counter % Change_Mode_Count == Set_Hours_Count)
    {
        current_Mode = SET_HOURS;
    }
-   else if(SET_Counter % 3 == 2)
+   else if(SET_Counter % Change_Mode_Count == Set_Minutes_Count)
    {
        current_Mode = SET_MINUTES;
    }
 
    return current_Mode;
 }
+
+//N: normal mode,
+//SH: set hours mode
+//SM: set minutes mode
+
+//N     SH      SM      N       SH       SM
+//0      1       2      3       4        5
+//(0,3,6,9,....) % 3 = 0
+//(1,4,7,10,...) % 3 = 1
+//(2,5,8,11,...) % 3 = 2

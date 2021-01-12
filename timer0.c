@@ -88,4 +88,4 @@ void TMR0_Update(void) __interrupt 0 // @ 5 ms
 
 
 }*/
-// from this link: https://embetronicx.com/tutorials/microcontrollers/pic16f877a/pic16f877a-timer-tutorial/
+
