@@ -62,7 +62,7 @@ void TMR0_Update(void) __interrupt 0 // @ 5 ms
         counter = 0;
     }
 
-    DISP_Update(); //@ 5 ms
+    DISP_Update();//@ 5 ms
     SSD_Update();
 
     TMR0_CLEAR_FLAG();
