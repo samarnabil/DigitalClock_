@@ -13,6 +13,8 @@
 #define Set_Minutes_Count (2)
 #define Change_Mode_Count (3)
 
+#define Counted_Second (72)
+
 
 static unsigned char CountSec = 0;
 static tTIM_Mode current_Mode = NORMAL;
@@ -44,7 +46,7 @@ void TIM_Update(void)
     switch (current_Mode)
     {
     case NORMAL:
-        if(CountSec < 72)
+        if(CountSec < Counted_Second)
         {
             CountSec++;
         }
